@@ -36,7 +36,7 @@ public class FacultyController {
 
     @PutMapping
     public ResponseEntity<Faculty> updateFaculty (@RequestBody Faculty faculty) {
-        Faculty updatedFaculty = facultyService.updateFaculty(faculty.getId(), faculty);
+        Faculty updatedFaculty = facultyService.updateFaculty(faculty);
         if (updatedFaculty == null) {
             return ResponseEntity.notFound() .build();
         }
@@ -45,8 +45,8 @@ public class FacultyController {
 
     @DeleteMapping
     public ResponseEntity<Faculty> deleteFaculty (@RequestBody int facultyId) {
-        Faculty deletedFaculty = facultyService.deleteFaculty(facultyId);
-        return ResponseEntity.ok(deletedFaculty);
+        facultyService.deleteFaculty(facultyId);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/color/{color}")
@@ -54,6 +54,6 @@ public class FacultyController {
         if (facultyService.getFacultyByColor(color).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(facultyService.getFacultyByColor(color));
+        return ResponseEntity.ok().build();
     }
 }

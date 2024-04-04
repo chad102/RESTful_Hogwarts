@@ -36,7 +36,7 @@ public class StudentController {
 
     @PutMapping
     public ResponseEntity<Student> updateStudent (@RequestBody Student student) {
-        Student updatedStudent = studentService.updateStudent(student.getId(), student);
+        Student updatedStudent = studentService.updateStudent(student);
         if (updatedStudent == null) {
             return ResponseEntity.notFound().build();
         }
@@ -45,8 +45,8 @@ public class StudentController {
 
     @DeleteMapping
     public ResponseEntity<Student> deleteStudent (@RequestBody int studentId) {
-        Student deletedStudent = studentService.deleteStudent(studentId);
-        return ResponseEntity.ok(deletedStudent);
+        studentService.deleteStudent(studentId);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/age/{age}")
