@@ -2,10 +2,12 @@ package ru.hogwarts.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.hogwarts.model.Faculty;
 import ru.hogwarts.model.Student;
 import ru.hogwarts.repository.StudentRepository;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,5 +38,13 @@ public class StudentService {
 
     public List<Student> getStudentsByAge(int age){
         return studentRepository.findByAge(age);
+    }
+
+    public List<Student> findByAgeBetween(int minAge, int maxAge){
+        return studentRepository.findByAgeBetween(minAge, maxAge);
+    }
+
+    public Collection<Student> getStudentsByFaculty (Faculty faculty) {
+        return studentRepository.findByFacultyId(faculty.getId());
     }
 }

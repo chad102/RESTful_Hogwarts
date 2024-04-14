@@ -3,9 +3,11 @@ package ru.hogwarts.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.model.Faculty;
+import ru.hogwarts.model.Student;
 import ru.hogwarts.service.FacultyService;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +27,7 @@ public class FacultyController {
         return ResponseEntity.ok(createdFaculty);
     }
 
-    @GetMapping("{facultyId}")
+    @GetMapping("/{facultyId}")
     public ResponseEntity<Faculty> getFaculty (@PathVariable int facultyId) {
         Faculty faculty = facultyService.getFaculty(facultyId);
         if (faculty == null) {
@@ -49,11 +51,21 @@ public class FacultyController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/color/{color}")
+    @GetMapping("/nameOrColor/{name} / {color}")
     public ResponseEntity<List<Faculty>> getFacultyByColor (@PathVariable String color) {
-        if (facultyService.getFacultyByColor(color).isEmpty()) {
+        List<Faculty> faculties = facultyService.findByColorIgnoreCase(color);
+        if (faculties.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(faculties);
+    }
+
+    @GetMapping("/facultyByStudent")
+    public ResponseEntity<Faculty> getFacultyByStudent (@RequestBody Student student) {
+        Faculty faculty = facultyService.getFacultyByStudent(student);
+        if (faculty == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(faculty);
     }
 }
