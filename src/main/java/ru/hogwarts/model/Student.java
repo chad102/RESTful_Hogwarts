@@ -11,9 +11,10 @@ public class Student {
 
     private String name;
     private int age;
+
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "faculty_id")
+    @JoinColumn(name = "faculty_Id")
     private Faculty faculty;
 
     public Student(long id, String name, int age) {
@@ -48,7 +49,9 @@ public class Student {
     public void setAge(int age) {
         this.age = age;
     }
-
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
     public Faculty getFaculty() {
         return faculty;
     }

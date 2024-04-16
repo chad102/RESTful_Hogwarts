@@ -36,9 +36,9 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @PutMapping
-    public ResponseEntity<Student> updateStudent (@RequestBody Student student) {
-        Student updatedStudent = studentService.updateStudent(student);
+    @PutMapping("{studentId}")
+    public ResponseEntity<Student> updateStudent (@RequestBody long studentId, @RequestBody Student student) {
+        Student updatedStudent = studentService.updateStudent(studentId, student);
         if (updatedStudent == null) {
             return ResponseEntity.notFound().build();
         }
@@ -68,12 +68,12 @@ public class StudentController {
         return ResponseEntity.ok(students);
     }
 
-    @GetMapping("/allStudentsByFaculty")
-    public ResponseEntity<Collection<Student>> getStudentsByFaculty (@RequestBody Faculty faculty) {
-        Collection<Student> students = studentService.getStudentsByFaculty(faculty);
-        if (students.isEmpty()) {
+    @GetMapping("/{studentId}/faculty")
+    public ResponseEntity<Faculty> findFaculty (@PathVariable long studentId) {
+        Faculty faculty = studentService.findFaculty(studentId);
+        if (faculty == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(students);
+        return ResponseEntity.ok(faculty);
     }
 }

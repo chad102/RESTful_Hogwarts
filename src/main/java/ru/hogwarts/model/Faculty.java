@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class Faculty {
@@ -18,7 +19,7 @@ public class Faculty {
     private String color;
     @JsonIgnore
     @OneToMany(mappedBy = "faculty")
-    private Collection<Student> students;
+    private List<Student> students;
     public Faculty(int id, String name, String color) {
         this.id = id;
         this.name = name;
@@ -53,7 +54,7 @@ public class Faculty {
         this.color = color;
     }
 
-    public Collection<Student> getStudents() {
+    public List<Student> getStudents() {
         return students;
     }
 }

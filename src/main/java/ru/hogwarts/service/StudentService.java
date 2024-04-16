@@ -2,22 +2,24 @@ package ru.hogwarts.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.hogwarts.exceptions.StudentNotFoundException;
 import ru.hogwarts.model.Faculty;
 import ru.hogwarts.model.Student;
+import ru.hogwarts.repository.FacultyRepository;
 import ru.hogwarts.repository.StudentRepository;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
     @Autowired
     private final StudentRepository studentRepository;
+    private final FacultyRepository facultyRepository;
 
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository,
+                          FacultyRepository facultyRepository) {
         this.studentRepository = studentRepository;
+        this.facultyRepository = facultyRepository;
     }
 
     public Student createStudent (Student student) {
@@ -25,15 +27,27 @@ public class StudentService {
     }
 
     public Student getStudent(long studentId) {
-        return studentRepository.findById(studentId).get();
+        return studentRepository.findById(studentId)
+                .orElseThrow(() -> new StudentNotFoundException(studentId));
     }
 
-    public Student updateStudent(Student student) {
-        return studentRepository.save(student);
+    public Student updateStudent(long studentId, Student student) {
+        return studentRepository.findById(studentId)
+                .map(oldStudent-> {
+                    oldStudent.setName(student.getName());
+                    oldStudent.setAge(student.getAge());
+                    return studentRepository.save(oldStudent);
+                })
+                .orElseThrow(() -> new StudentNotFoundException(studentId));
     }
 
-    public void deleteStudent(long studentId) {
-        studentRepository.deleteById(studentId);;
+    public Student deleteStudent(long studentId) {
+        return studentRepository.findById(studentId)
+                .map(student-> {
+                    studentRepository.delete(student);
+                    return student;
+                })
+                .orElseThrow(() -> new StudentNotFoundException(studentId));
     }
 
     public List<Student> getStudentsByAge(int age){
@@ -44,7 +58,7 @@ public class StudentService {
         return studentRepository.findByAgeBetween(minAge, maxAge);
     }
 
-    public Collection<Student> getStudentsByFaculty (Faculty faculty) {
-        return studentRepository.findByFacultyId(faculty.getId());
+    public Faculty findFaculty (long studentId) {
+        return getStudent(studentId).getFaculty();
     }
 }

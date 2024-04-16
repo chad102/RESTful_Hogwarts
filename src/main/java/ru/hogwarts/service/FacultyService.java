@@ -1,9 +1,11 @@
 package ru.hogwarts.service;
 
 import org.springframework.stereotype.Service;
+import ru.hogwarts.exceptions.FacultyNotFoundException;
 import ru.hogwarts.model.Faculty;
 import ru.hogwarts.model.Student;
 import ru.hogwarts.repository.FacultyRepository;
+import ru.hogwarts.repository.StudentRepository;
 
 import java.util.List;
 
@@ -11,9 +13,11 @@ import java.util.List;
 
 public class FacultyService {
     private final FacultyRepository facultyRepository;
+    private final StudentRepository studentRepository;
 
-    public FacultyService(FacultyRepository facultyRepository) {
+    public FacultyService(FacultyRepository facultyRepository, StudentRepository studentRepository) {
         this.facultyRepository = facultyRepository;
+        this.studentRepository = studentRepository;
     }
 
     public Faculty createFaculty (Faculty faculty) {
@@ -21,21 +25,34 @@ public class FacultyService {
     }
 
     public Faculty getFaculty(int facultyId) {
-        return facultyRepository.findById(facultyId).get();
+        return facultyRepository.findById(facultyId)
+                .orElseThrow(() -> new FacultyNotFoundException(facultyId));
     }
 
-    public Faculty updateFaculty(Faculty faculty) {
-        return facultyRepository.save(faculty);
+    public Faculty updateFaculty(int facultyId, Faculty faculty) {
+        return facultyRepository.findById(facultyId)
+                .map(oldFaculty -> {
+                    oldFaculty.setName(faculty.getName());
+                    oldFaculty.setColor(faculty.getColor());
+                return facultyRepository.save(oldFaculty);
+                })
+                .orElseThrow(() -> new FacultyNotFoundException(facultyId));
     }
 
     public void deleteFaculty(int facultyId) {
-        facultyRepository.deleteById(facultyId);
+        facultyRepository.findById(facultyId)
+                .map(faculty -> {
+                     facultyRepository.delete(faculty);
+                     return faculty;
+                })
+                .orElseThrow(() -> new FacultyNotFoundException(facultyId));
     }
 
     public List<Faculty> findByColorIgnoreCase(String color){
         return facultyRepository.findByColorIgnoreCase(color);
     }
-    public Faculty getFacultyByStudent (Student student) {
-        return facultyRepository.findByStudent(student.getId());
+
+    public List<Student> findStudentsByFaculty (int facultyId) {
+        return studentRepository.findByFaculty_Id(facultyId);
     }
 }
