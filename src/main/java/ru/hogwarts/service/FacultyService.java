@@ -48,8 +48,8 @@ public class FacultyService {
                 .orElseThrow(() -> new FacultyNotFoundException(facultyId));
     }
 
-    public List<Faculty> findByColorIgnoreCase(String color){
-        return facultyRepository.findByColorIgnoreCase(color);
+    public List<Faculty> findByColorOrName(String colorOrName){
+        return facultyRepository.findByColorIgnoreCaseOrNameIgnoreCase(colorOrName, colorOrName);
     }
 
     public List<Student> findStudentsByFaculty (int facultyId) {
