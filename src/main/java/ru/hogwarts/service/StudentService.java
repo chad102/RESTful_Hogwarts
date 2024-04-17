@@ -28,7 +28,7 @@ public class StudentService {
 
     public Student getStudent(long studentId) {
         return studentRepository.findById(studentId)
-                .orElseThrow(() -> new StudentNotFoundException("Student not found"));
+                .orElseThrow(() -> new StudentNotFoundException(studentId));
     }
 
     public Student updateStudent(long studentId, Student student) {
@@ -38,7 +38,7 @@ public class StudentService {
                     oldStudent.setAge(student.getAge());
                     return studentRepository.save(oldStudent);
                 })
-                .orElseThrow(() -> new StudentNotFoundException("Student not found"));
+                .orElseThrow(() -> new StudentNotFoundException(studentId));
     }
 
     public Student deleteStudent(long studentId) {
@@ -47,7 +47,7 @@ public class StudentService {
                     studentRepository.delete(student);
                     return student;
                 })
-                .orElseThrow(() -> new StudentNotFoundException("Student not found"));
+                .orElseThrow(() -> new StudentNotFoundException(studentId));
     }
 
     public List<Student> getStudentsByAge(int age){

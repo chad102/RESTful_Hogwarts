@@ -26,7 +26,7 @@ public class FacultyService {
 
     public Faculty getFaculty(int facultyId) {
         return facultyRepository.findById(facultyId)
-                .orElseThrow(() -> new FacultyNotFoundException("Faculty not found"));
+                .orElseThrow(() -> new FacultyNotFoundException(facultyId));
     }
 
     public Faculty updateFaculty(int facultyId, Faculty faculty) {
@@ -36,7 +36,7 @@ public class FacultyService {
                     oldFaculty.setColor(faculty.getColor());
                 return facultyRepository.save(oldFaculty);
                 })
-                .orElseThrow(() -> new FacultyNotFoundException("Faculty not found"));
+                .orElseThrow(() -> new FacultyNotFoundException(facultyId));
     }
 
     public void deleteFaculty(int facultyId) {
@@ -45,7 +45,7 @@ public class FacultyService {
                      facultyRepository.delete(faculty);
                      return faculty;
                 })
-                .orElseThrow(() -> new FacultyNotFoundException("Faculty not found"));
+                .orElseThrow(() -> new FacultyNotFoundException(facultyId));
     }
 
     public List<Faculty> findByColorOrName(String colorOrName){
