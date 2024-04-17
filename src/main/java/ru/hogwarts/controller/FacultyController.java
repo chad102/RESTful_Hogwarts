@@ -28,23 +28,17 @@ public class FacultyController {
     @GetMapping("/{facultyId}")
     public ResponseEntity<Faculty> getFaculty (@PathVariable int facultyId) {
         Faculty faculty = facultyService.getFaculty(facultyId);
-        if (faculty == null) {
-            return ResponseEntity.notFound() .build();
-        }
         return ResponseEntity.ok(faculty);
     }
 
     @PutMapping
     public ResponseEntity<Faculty> updateFaculty (@RequestBody Faculty faculty) {
         Faculty updatedFaculty = facultyService.updateFaculty(faculty.getId(), faculty);
-        if (updatedFaculty == null) {
-            return ResponseEntity.notFound() .build();
-        }
         return ResponseEntity.ok(updatedFaculty);
     }
 
-    @DeleteMapping
-    public ResponseEntity<Faculty> deleteFaculty (@RequestParam int facultyId) {
+    @DeleteMapping("/{facultyId}")
+    public ResponseEntity<Faculty> deleteFaculty (@PathVariable int facultyId) {
         facultyService.deleteFaculty(facultyId);
         return ResponseEntity.ok().build();
     }
@@ -52,18 +46,12 @@ public class FacultyController {
     @GetMapping
     public ResponseEntity<List<Faculty>> getFacultyByColor (@RequestParam String colorOrName) {
         List<Faculty> faculties = facultyService.findByColorOrName(colorOrName);
-        if (faculties.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(faculties);
     }
 
     @GetMapping("/{facultyId}/students")
     public ResponseEntity<List<Student>> getStudentsByFaculty (@PathVariable int facultyId) {
         List<Student> students = facultyService.findStudentsByFaculty(facultyId);
-        if (students.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(students);
     }
 }
