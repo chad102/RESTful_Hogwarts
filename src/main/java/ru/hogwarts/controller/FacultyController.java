@@ -44,12 +44,12 @@ public class FacultyController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Faculty> deleteFaculty (@RequestBody int facultyId) {
+    public ResponseEntity<Faculty> deleteFaculty (@RequestParam int facultyId) {
         facultyService.deleteFaculty(facultyId);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/nameOrColor/{name}/{color}")
+    @GetMapping
     public ResponseEntity<List<Faculty>> getFacultyByColor (@RequestParam String colorOrName) {
         List<Faculty> faculties = facultyService.findByColorOrName(colorOrName);
         if (faculties.isEmpty()) {

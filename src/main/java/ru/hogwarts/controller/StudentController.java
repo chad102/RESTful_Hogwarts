@@ -43,12 +43,12 @@ public class StudentController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Student> deleteStudent (@RequestBody int studentId) {
+    public ResponseEntity<Student> deleteStudent (@RequestParam int studentId) {
         studentService.deleteStudent(studentId);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/age/{age}")
+    @GetMapping(params = "/age")
     public ResponseEntity<List<Student>> getStudentsByAge (@PathVariable int age) {
         if (studentService.getStudentsByAge(age).isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -56,7 +56,7 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getStudentsByAge(age));
     }
 
-    @GetMapping("/age/find-by-age-between/{minAge}/{maxAge}")
+    @GetMapping(params = {"minAge", "maxAge"})
     public ResponseEntity<List<Student>> findByAgeBetween (@PathVariable int minAge, @PathVariable int maxAge) {
         List<Student> students = studentService.findByAgeBetween(minAge, maxAge);
         if (students.isEmpty()) {
