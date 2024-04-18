@@ -18,16 +18,6 @@ public class Faculty {
     private String name;
     private String color;
 
-    public Faculty(int id, String name, String color) {
-        this.id = id;
-        this.name = name;
-        this.color = color;
-    }
-
-    public Faculty(){
-
-    }
-
     public int getId() {
         return id;
     }

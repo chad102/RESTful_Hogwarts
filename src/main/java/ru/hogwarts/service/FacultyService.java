@@ -39,8 +39,8 @@ public class FacultyService {
                 .orElseThrow(() -> new FacultyNotFoundException(facultyId));
     }
 
-    public void deleteFaculty(int facultyId) {
-        facultyRepository.findById(facultyId)
+    public Faculty deleteFaculty(int facultyId) {
+        return facultyRepository.findById(facultyId)
                 .map(faculty -> {
                      facultyRepository.delete(faculty);
                      return faculty;
