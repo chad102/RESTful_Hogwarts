@@ -34,7 +34,7 @@ public class StudentController {
     }
 
     @PutMapping("/{studentId}")
-    public ResponseEntity<Student> updateStudent (@RequestParam long studentId, @RequestBody Student student) {
+    public ResponseEntity<Student> updateStudent (@PathVariable long studentId, @RequestBody Student student) {
         Student updatedStudent = studentService.updateStudent(studentId, student);
         if (updatedStudent == null) {
             return ResponseEntity.notFound().build();
@@ -48,8 +48,8 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(params = "/age")
-    public ResponseEntity<List<Student>> getStudentsByAge (@PathVariable int age) {
+    @GetMapping(params = "age")
+    public ResponseEntity<List<Student>> getStudentsByAge (@RequestParam int age) {
         if (studentService.getStudentsByAge(age).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -57,7 +57,7 @@ public class StudentController {
     }
 
     @GetMapping(params = {"minAge", "maxAge"})
-    public ResponseEntity<List<Student>> findByAgeBetween (@PathVariable int minAge, @PathVariable int maxAge) {
+    public ResponseEntity<List<Student>> findByAgeBetween (@RequestParam int minAge, @RequestParam int maxAge) {
         List<Student> students = studentService.findByAgeBetween(minAge, maxAge);
         if (students.isEmpty()) {
             return ResponseEntity.notFound().build();
