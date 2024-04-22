@@ -2,6 +2,7 @@ package ru.hogwarts.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.exceptions.StudentNotFoundException;
 import ru.hogwarts.model.Faculty;
 import ru.hogwarts.model.Student;
@@ -57,4 +58,5 @@ public class StudentService {
     public Faculty findFaculty (long studentId) {
         return getStudent(studentId).getFaculty();
     }
+
 }
