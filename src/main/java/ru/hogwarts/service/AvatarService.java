@@ -1,7 +1,6 @@
 package ru.hogwarts.service;
 
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,13 +20,11 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
 @Transactional
 public class AvatarService {
-    @Value("/avatars")
     private String avatarsDir;
-@Autowired
-    private AvatarRepository avatarRepository;
-    private StudentService studentService;
+    private final AvatarRepository avatarRepository;
+    private final StudentService studentService;
 
-    public AvatarService(String avatarsDir,
+    public AvatarService(@Value("${path.to.avatars.folder}") String avatarsDir,
                          AvatarRepository avatarRepository,
                          StudentService studentService) {
         this.avatarsDir = avatarsDir;
@@ -39,7 +36,7 @@ public class AvatarService {
     public void uploadAvatar(long studentId, MultipartFile file) throws IOException {
         Student student = studentService.getStudent(studentId);
 
-        Path filePath = Path.of(avatarsDir, studentId + "." + getExtension(file.getOriginalFilename()));
+        Path filePath = Path.of(avatarsDir, studentId + "." + getFilenameExtension(file.getOriginalFilename()));
         Files.createDirectory(filePath.getParent());
         Files.deleteIfExists(filePath);
 
@@ -77,12 +74,12 @@ public class AvatarService {
              graphics.drawImage(image, 0,0,100,height, null);
              graphics.dispose();
 
-             ImageIO.write(preview, getExtension(filePath.getFileName().toString()), baos);
+             ImageIO.write(preview, getFilenameExtension(filePath.getFileName().toString()), baos);
              return baos.toByteArray();
         }
     }
 
-    public String getExtension(String fileName) {
+    public String getFilenameExtension (String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
