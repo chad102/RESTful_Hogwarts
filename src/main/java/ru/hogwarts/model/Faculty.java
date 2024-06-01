@@ -1,18 +1,16 @@
 package ru.hogwarts.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Faculty {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
     private String name;
@@ -42,4 +40,24 @@ public class Faculty {
         this.color = color;
     }
 
+    @Override
+    public String toString() {
+        return "Faculty{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", color='" + color + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Faculty faculty)) return false;
+        return getId() == faculty.getId() && Objects.equals(getName(), faculty.getName()) && Objects.equals(getColor(), faculty.getColor());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getColor());
+    }
 }

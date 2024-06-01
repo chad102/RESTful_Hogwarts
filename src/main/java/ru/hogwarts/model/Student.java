@@ -1,7 +1,8 @@
 package ru.hogwarts.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.Objects;
 
 @Entity
 public class Student {
@@ -44,5 +45,27 @@ public class Student {
     }
     public Faculty getFaculty() {
         return faculty;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", faculty=" + faculty +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Student student)) return false;
+        return getId() == student.getId() && getAge() == student.getAge() && Objects.equals(getName(), student.getName()) && Objects.equals(getFaculty(), student.getFaculty());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getAge(), getFaculty());
     }
 }

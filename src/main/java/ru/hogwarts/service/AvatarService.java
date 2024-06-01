@@ -20,7 +20,7 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
 @Transactional
 public class AvatarService {
-    private String avatarsDir;
+    private final String avatarsDir;
     private final AvatarRepository avatarRepository;
     private final StudentService studentService;
 

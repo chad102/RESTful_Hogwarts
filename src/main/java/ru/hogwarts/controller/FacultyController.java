@@ -1,5 +1,6 @@
 package ru.hogwarts.controller;
 
+import ch.qos.logback.classic.jul.JULHelper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.model.Faculty;
@@ -31,9 +32,13 @@ public class FacultyController {
         return ResponseEntity.ok(faculty);
     }
 
-    @PutMapping
-    public ResponseEntity<Faculty> updateFaculty (@RequestBody Faculty faculty) {
-        Faculty updatedFaculty = facultyService.updateFaculty(faculty.getId(), faculty);
+    @PutMapping("/{facultyId}")
+    public ResponseEntity<Faculty> updateFaculty (@PathVariable int facultyId, @RequestBody Faculty faculty) {
+        Faculty updatedFaculty = facultyService.updateFaculty(facultyId, faculty);
+        if (updatedFaculty == null) {
+            return ResponseEntity.notFound().build();
+        }
+        System.out.println(faculty);
         return ResponseEntity.ok(updatedFaculty);
     }
 
