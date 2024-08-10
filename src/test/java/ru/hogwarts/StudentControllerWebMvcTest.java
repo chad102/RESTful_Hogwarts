@@ -77,8 +77,7 @@ public class StudentControllerWebMvcTest {
 
         // when
         ResultActions perform = mockMvc.perform(get("/student/{studentId}", studentId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(student)));
+                .contentType(MediaType.APPLICATION_JSON));
 
         // then
         perform
@@ -125,8 +124,7 @@ public class StudentControllerWebMvcTest {
 
         // when
         ResultActions perform = mockMvc.perform(delete("/student/{studentId}", studentId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(student)));
+                .contentType(MediaType.APPLICATION_JSON));
 
         // then
         perform

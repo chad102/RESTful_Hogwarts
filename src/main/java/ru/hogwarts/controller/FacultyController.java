@@ -1,13 +1,11 @@
 package ru.hogwarts.controller;
 
-import ch.qos.logback.classic.jul.JULHelper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.model.Faculty;
 import ru.hogwarts.model.Student;
 import ru.hogwarts.service.FacultyService;
 
-import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -38,7 +36,6 @@ public class FacultyController {
         if (updatedFaculty == null) {
             return ResponseEntity.notFound().build();
         }
-        System.out.println(faculty);
         return ResponseEntity.ok(updatedFaculty);
     }
 

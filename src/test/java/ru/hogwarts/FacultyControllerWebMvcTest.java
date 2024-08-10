@@ -73,8 +73,7 @@ public class FacultyControllerWebMvcTest {
 
         // when
         ResultActions perform = mockMvc.perform(get("/faculty/{facultyId}", facultyId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(faculty)));
+                .contentType(MediaType.APPLICATION_JSON));
 
         // then
         perform
@@ -116,12 +115,11 @@ public class FacultyControllerWebMvcTest {
         faculty.setColor("Красный");
         faculty.setId(facultyId);
 
-        when(facultyService.getFaculty(faculty.getId())).thenReturn(faculty);
+        when(facultyService.deleteFaculty(faculty.getId())).thenReturn(faculty);
 
         // when
         ResultActions perform = mockMvc.perform(delete("/faculty/{facultyId}", facultyId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(faculty)));
+                .contentType(MediaType.APPLICATION_JSON));
 
         // then
         perform

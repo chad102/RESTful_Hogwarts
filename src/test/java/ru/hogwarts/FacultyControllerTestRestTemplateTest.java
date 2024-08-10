@@ -180,7 +180,6 @@ public class FacultyControllerTestRestTemplateTest {
 
         faculty.setColor("Красный");
         faculty.setName("Гриффиндор");
-        faculty.setId(1);
 
         faculty = facultyRepository.save(faculty);
 
