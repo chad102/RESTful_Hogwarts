@@ -72,7 +72,7 @@ public class StudentService {
         Integer pageSize = 5;
         int pageNumber = getCountOfAllStudents() / pageSize;
 
-        PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize); // не уверен, что нужно отнимать единицу при такой реализации
+        PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);  // не уверен, что нужно отнимать единицу при такой реализации
         return studentRepository.findAll(pageRequest).getContent();
     }
 }
