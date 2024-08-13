@@ -86,7 +86,7 @@ public class AvatarService {
     }
 
     public List<Avatar> getAvatars(Integer pageNumber, Integer pageSize) {
-        PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
         return avatarRepository.findAll(pageRequest).getContent();
     }
 }

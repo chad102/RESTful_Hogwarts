@@ -18,8 +18,8 @@ public class AvatarSqlController {
         this.avatarService = avatarService;
     }
 
-    @GetMapping("/get-avatars-by-5")
-    public ResponseEntity<List<Avatar>> getAvatarBy5 (Integer pageNumber, Integer pageSize) {
+    @GetMapping("/get-avatars")
+    public ResponseEntity<List<Avatar>> getAvatarByPage (Integer pageNumber, Integer pageSize) {
         return ResponseEntity.ok(avatarService.getAvatars(pageNumber, pageSize));
     }
 }
