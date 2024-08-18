@@ -75,4 +75,8 @@ public class StudentService {
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);  // не уверен, что нужно отнимать единицу при такой реализации
         return studentRepository.findAll(pageRequest).getContent();
     }
+
+    public List<Student> getStudentsByName(String name) {
+        return studentRepository.getStudentsByName(name);
+    }
 }
