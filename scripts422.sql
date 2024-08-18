@@ -12,5 +12,3 @@ CREATE TABLE drivers (
     driver_doc BOOLEAN,
     car TEXT REFERENCES cars (id)
 );
-
-1
