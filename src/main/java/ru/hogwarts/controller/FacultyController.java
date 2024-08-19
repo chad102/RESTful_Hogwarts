@@ -45,7 +45,7 @@ public class FacultyController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Faculty>> getFacultyByColor (@RequestParam String colorOrName) {
+    public ResponseEntity<List<Faculty>> getFacultyByColorOrName (@RequestParam String colorOrName) {
         List<Faculty> faculties = facultyService.findByColorOrName(colorOrName);
         return ResponseEntity.ok(faculties);
     }
@@ -54,5 +54,11 @@ public class FacultyController {
     public ResponseEntity<List<Student>> getStudentsByFaculty (@PathVariable int facultyId) {
         List<Student> students = facultyService.findStudentsByFaculty(facultyId);
         return ResponseEntity.ok(students);
+    }
+
+    @GetMapping("/name-and-color")
+    public ResponseEntity<List<Faculty>> getFacultyByNameAndColor (@RequestParam String name, @RequestParam String color) {
+        List<Faculty> faculties = facultyService.findByNameAndColor(name, color);
+        return ResponseEntity.ok(faculties);
     }
 }

@@ -55,4 +55,8 @@ public class FacultyService {
     public List<Student> findStudentsByFaculty (int facultyId) {
         return studentRepository.findByFaculty_Id(facultyId);
     }
+
+    public List<Faculty> findByNameAndColor(String name, String color) {
+        return facultyRepository.findByNameIgnoreCaseAndColorIgnoreCase(name, color);
+    }
 }
