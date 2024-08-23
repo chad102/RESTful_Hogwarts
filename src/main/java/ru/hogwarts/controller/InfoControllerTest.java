@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Profile("test")
-public class InfoControllerTest {
+public class InfoControllerTest extends InfoController {
     @Autowired
     Environment environment;
 
     @GetMapping("/port")
-    public ResponseEntity<String> getPort() {
+    @Override
+    public ResponseEntity<String> getTestPort() {
         String port = environment.getProperty("server.port");
         return ResponseEntity.ok(port);
     }
