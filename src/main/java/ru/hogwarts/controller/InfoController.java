@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class InfoController {
+public abstract class InfoController {
 
     @Autowired
     Environment environment;
@@ -17,4 +17,7 @@ public class InfoController {
         String port = environment.getProperty("server.port");
         return ResponseEntity.ok(port);
     }
+
+    @GetMapping("/port")
+    public abstract ResponseEntity<String> getTestPort();
 }
