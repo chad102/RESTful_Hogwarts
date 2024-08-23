@@ -44,8 +44,8 @@ public class FacultyController {
         return facultyService.deleteFaculty(facultyId);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Faculty>> getFacultyByColorOrName (@RequestParam String colorOrName) {
+    @GetMapping("/colorOrName/{colorOrName}")
+    public ResponseEntity<List<Faculty>> getFacultyByColorOrName (@PathVariable String colorOrName) {
         List<Faculty> faculties = facultyService.findByColorOrName(colorOrName);
         return ResponseEntity.ok(faculties);
     }

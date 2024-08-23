@@ -1,6 +1,8 @@
 package ru.hogwarts.service;
 
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,7 @@ public class AvatarService {
     private final String avatarsDir;
     private final AvatarRepository avatarRepository;
     private final StudentService studentService;
+    Logger logger = LoggerFactory.getLogger(AvatarService.class);
 
     public AvatarService(@Value("${path.to.avatars.folder}") String avatarsDir,
                          AvatarRepository avatarRepository,
@@ -36,6 +39,9 @@ public class AvatarService {
 
 
     public void uploadAvatar(long studentId, MultipartFile file) throws IOException {
+        logger.info("Was invoked method for upload avatar");
+        logger.debug("Uploading avatar");
+        logger.warn("The size of the uploaded object must not exceed 1024");
         Student student = studentService.getStudent(studentId);
 
         Path filePath = Path.of(avatarsDir, studentId + "." + getFilenameExtension(file.getOriginalFilename()));
@@ -61,10 +67,12 @@ public class AvatarService {
     }
 
     public Avatar findStudentAvatar(long studentId) {
+        logger.info("Was invoked method for get avatar by student id");
         return avatarRepository.findByStudentId(studentId).orElse(new Avatar());
     }
 
     private byte[] generateImagePreview(Path filePath) throws IOException {
+        logger.info("Was invoked method for generate preview avatar");
         try (InputStream is = Files.newInputStream(filePath);
              BufferedInputStream bis = new BufferedInputStream(is, 1024);
              ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -82,10 +90,12 @@ public class AvatarService {
     }
 
     public String getFilenameExtension (String fileName) {
+        logger.info("Was invoked method for get file name extension");
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
     public List<Avatar> getAvatars(Integer pageNumber, Integer pageSize) {
+        logger.info("Was invoked method for get all avatars page by page");
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
         return avatarRepository.findAll(pageRequest).getContent();
     }
