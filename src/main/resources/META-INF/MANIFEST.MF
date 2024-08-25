@@ -1,0 +1,35 @@
+Manifest-Version: 1.0
+Main-Class: ru.hogwarts.Main
+Class-Path: jackson-datatype-jdk8-2.15.4.jar spring-boot-starter-data-jp
+ a-3.2.4.jar spring-jcl-6.1.5.jar tomcat-embed-el-10.1.19.jar spring-dat
+ a-jpa-3.2.4.jar antlr4-runtime-4.13.0.jar liquibase-core-4.24.0.jar spr
+ ing-boot-starter-jdbc-3.2.4.jar spring-boot-starter-tomcat-3.2.4.jar sp
+ ring-boot-starter-json-3.2.4.jar spring-boot-3.2.4.jar tomcat-embed-web
+ socket-10.1.19.jar classmate-1.6.0.jar commons-collections4-4.4.jar jak
+ arta.activation-api-2.1.3.jar spring-boot-starter-web-3.2.4.jar spring-
+ boot-starter-logging-3.2.4.jar jul-to-slf4j-2.0.12.jar jackson-core-2.1
+ 5.4.jar springdoc-openapi-starter-webmvc-ui-2.2.0.jar angus-activation-
+ 2.0.2.jar jaxb-api-2.3.1.jar tomcat-embed-core-10.1.19.jar jakarta.vali
+ dation-api-3.0.2.jar jakarta.transaction-api-2.0.1.jar jandex-3.1.2.jar
+  micrometer-observation-1.12.4.jar jaxb-core-4.0.5.jar logback-core-1.4
+ .14.jar spring-boot-autoconfigure-3.2.4.jar postgresql-42.6.2.jar commo
+ ns-lang3-3.13.0.jar opencsv-5.8.jar jackson-databind-2.15.4.jar swagger
+ -core-jakarta-2.2.15.jar spring-context-6.1.5.jar slf4j-api-2.0.12.jar 
+ spring-tx-6.1.5.jar spring-core-6.1.5.jar jackson-datatype-jsr310-2.15.
+ 4.jar jakarta.annotation-api-2.1.1.jar jaxb-runtime-4.0.5.jar logback-c
+ lassic-1.4.14.jar swagger-models-jakarta-2.2.15.jar springdoc-openapi-s
+ tarter-webmvc-api-2.2.0.jar swagger-ui-5.2.0.jar istack-commons-runtime
+ -4.1.2.jar jakarta.xml.bind-api-4.0.2.jar spring-aspects-6.1.5.jar byte
+ -buddy-1.14.12.jar spring-web-6.1.5.jar spring-boot-starter-aop-3.2.4.j
+ ar checker-qual-3.31.0.jar jboss-logging-3.5.3.Final.jar snakeyaml-2.2.
+ jar jakarta.inject-api-2.0.1.jar spring-webmvc-6.1.5.jar aspectjweaver-
+ 1.9.21.jar jackson-annotations-2.15.4.jar txw2-4.0.5.jar spring-boot-st
+ arter-3.2.4.jar log4j-to-slf4j-2.21.1.jar commons-text-1.10.0.jar Hikar
+ iCP-5.0.1.jar spring-aop-6.1.5.jar jackson-module-parameter-names-2.15.
+ 4.jar spring-beans-6.1.5.jar micrometer-commons-1.12.4.jar jakarta.pers
+ istence-api-3.1.0.jar hibernate-commons-annotations-6.0.6.Final.jar swa
+ gger-annotations-jakarta-2.2.15.jar spring-orm-6.1.5.jar hibernate-core
+ -6.4.4.Final.jar spring-data-commons-3.2.4.jar log4j-api-2.21.1.jar spr
+ ingdoc-openapi-starter-common-2.2.0.jar jackson-dataformat-yaml-2.15.4.
+ jar spring-expression-6.1.5.jar spring-jdbc-6.1.5.jar
+
