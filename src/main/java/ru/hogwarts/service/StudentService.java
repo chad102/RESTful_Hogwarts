@@ -12,7 +12,9 @@ import ru.hogwarts.model.Student;
 import ru.hogwarts.repository.FacultyRepository;
 import ru.hogwarts.repository.StudentRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -104,5 +106,23 @@ public class StudentService {
     public List<Student> getStudentsByName(String name) {
         logger.info("Was invoked method for get student by name");
         return studentRepository.getStudentsByName(name);
+    }
+
+    public List<Student> getSortedStudents() {
+        logger.info("Was invoked method for get sorted names begins with the letter a");
+        return studentRepository.findAll().stream().
+                parallel().
+                filter(e -> e.getName().toUpperCase().startsWith("A")).
+                sorted().
+                collect(Collectors.toList());
+    }
+
+    public Double getStudentAgeAverageByStream() {
+        logger.info("Was invoked method for get average age students");
+        return studentRepository.findAll().stream().
+                parallel().
+                mapToInt(Student :: getAge).
+                average().
+                getAsDouble();
     }
 }

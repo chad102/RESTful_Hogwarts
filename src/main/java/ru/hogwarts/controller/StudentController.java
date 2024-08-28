@@ -146,4 +146,14 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getStudentsByName(name));
     }
 
+    @GetMapping("/names/sorted/a")
+    public ResponseEntity<List<Student>> getSortedStudents() {
+        return ResponseEntity.ok(studentService.getSortedStudents());
+    }
+
+    @GetMapping("/get-age-average-stream")
+    public ResponseEntity<Double> getStudentAgeAverageByStream() {
+        return ResponseEntity.ok(studentService.getStudentAgeAverageByStream());
+    }
+
 }

@@ -9,7 +9,11 @@ import ru.hogwarts.model.Student;
 import ru.hogwarts.repository.FacultyRepository;
 import ru.hogwarts.repository.StudentRepository;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 
@@ -77,5 +81,32 @@ public class FacultyService {
     public List<Faculty> findByNameAndColor(String name, String color) {
         logger.info("Was invoked method for get faculty by name and color");
         return facultyRepository.findByNameIgnoreCaseAndColorIgnoreCase(name, color);
+    }
+
+    public Faculty getLongerNameOfFaculty() {
+        logger.info("Was invoked method for get longer name of faculty");
+        return facultyRepository.findAll().stream().
+                max(Comparator.comparingInt(e -> e.getName().length())).
+                get();
+    }
+
+    public Integer getModifiedLogic() {
+        long startTime = System.nanoTime();
+        int sum = Stream.iterate(1, a -> a + 1).
+                limit(1_000_000).
+                parallel().reduce(0, (a, b) -> a + b);
+        long endTime = System.nanoTime();
+        System.out.println(endTime - startTime);
+        return sum;
+    }
+
+    public Integer getStandardLogic() {
+        long startTime = System.nanoTime();
+        int sum = Stream.iterate(1, a -> a + 1).
+                limit(1_000_000).
+                reduce(0, (a, b) -> a + b);
+        long endTime = System.nanoTime();
+        System.out.println(endTime - startTime);
+        return sum;
     }
 }
