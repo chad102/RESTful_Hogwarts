@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @Service
@@ -87,25 +88,25 @@ public class FacultyService {
         logger.info("Was invoked method for get longer name of faculty");
         return facultyRepository.findAll().stream().
                 max(Comparator.comparingInt(e -> e.getName().length())).
-                get();
+                orElseThrow(NullPointerException::new);
     }
 
-    public Integer getModifiedLogic() {
-        long startTime = System.nanoTime();
+    public Integer getStandardLogic() {
+        long startTime = System.currentTimeMillis();
         int sum = Stream.iterate(1, a -> a + 1).
                 limit(1_000_000).
-                parallel().reduce(0, (a, b) -> a + b);
-        long endTime = System.nanoTime();
+                reduce(0, (a, b) -> a + b);
+        long endTime = System.currentTimeMillis();
         System.out.println(endTime - startTime);
         return sum;
     }
 
-    public Integer getStandardLogic() {
-        long startTime = System.nanoTime();
-        int sum = Stream.iterate(1, a -> a + 1).
+    public Integer getModifiedLogic() {
+        long startTime = System.currentTimeMillis();
+        int sum = IntStream.iterate(1, a -> a + 1).
                 limit(1_000_000).
                 reduce(0, (a, b) -> a + b);
-        long endTime = System.nanoTime();
+        long endTime = System.currentTimeMillis();
         System.out.println(endTime - startTime);
         return sum;
     }

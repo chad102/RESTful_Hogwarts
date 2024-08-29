@@ -67,13 +67,13 @@ public class FacultyController {
         return ResponseEntity.ok(facultyService.getLongerNameOfFaculty());
     }
 
-    @GetMapping("/modified-logic")
-    public ResponseEntity<Integer> getModifiedLogic() {
-        return ResponseEntity.ok(facultyService.getModifiedLogic());
-    }
-
     @GetMapping("/standard-logic")
     public ResponseEntity<Integer> getStandardLogic() {
         return ResponseEntity.ok(facultyService.getStandardLogic());
+    }
+
+    @GetMapping("/modified-logic")
+    public ResponseEntity<Integer> getModifiedLogic() {
+        return ResponseEntity.ok(facultyService.getModifiedLogic());
     }
 }

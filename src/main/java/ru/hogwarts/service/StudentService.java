@@ -120,9 +120,8 @@ public class StudentService {
     public Double getStudentAgeAverageByStream() {
         logger.info("Was invoked method for get average age students");
         return studentRepository.findAll().stream().
-                parallel().
                 mapToInt(Student :: getAge).
                 average().
-                getAsDouble();
+                orElseThrow(NullPointerException::new);
     }
 }
