@@ -84,11 +84,12 @@ public class FacultyService {
         return facultyRepository.findByNameIgnoreCaseAndColorIgnoreCase(name, color);
     }
 
-    public Faculty getLongerNameOfFaculty() {
+    public String getLongerNameOfFaculty() {
         logger.info("Was invoked method for get longer name of faculty");
         return facultyRepository.findAll().stream().
                 max(Comparator.comparingInt(e -> e.getName().length())).
-                orElseThrow(NullPointerException::new);
+                orElseThrow(NullPointerException::new).
+                getName();
     }
 
     public Integer getStandardLogic() {

@@ -63,7 +63,7 @@ public class FacultyController {
     }
 
     @GetMapping("/longer-name")
-    public ResponseEntity<Faculty> getLongerNameOfFaculty() {
+    public ResponseEntity<String> getLongerNameOfFaculty() {
         return ResponseEntity.ok(facultyService.getLongerNameOfFaculty());
     }
 

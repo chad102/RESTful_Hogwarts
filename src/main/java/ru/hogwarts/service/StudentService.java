@@ -111,7 +111,6 @@ public class StudentService {
     public List<Student> getSortedStudents() {
         logger.info("Was invoked method for get sorted names begins with the letter a");
         return studentRepository.findAll().stream().
-                parallel().
                 filter(e -> e.getName().toUpperCase().startsWith("A")).
                 sorted().
                 collect(Collectors.toList());
