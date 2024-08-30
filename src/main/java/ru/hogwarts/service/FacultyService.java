@@ -104,9 +104,8 @@ public class FacultyService {
 
     public Integer getModifiedLogic() {
         long startTime = System.currentTimeMillis();
-        int sum = IntStream.iterate(1, a -> a + 1).
-                limit(1_000_000).
-                reduce(0, (a, b) -> a + b);
+        int sum = IntStream.rangeClosed(1, 1_000_000).
+                parallel().sum();
         long endTime = System.currentTimeMillis();
         System.out.println(endTime - startTime);
         return sum;
