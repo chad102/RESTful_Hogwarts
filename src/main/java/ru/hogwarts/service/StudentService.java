@@ -2,28 +2,25 @@ package ru.hogwarts.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.exceptions.StudentNotFoundException;
 import ru.hogwarts.model.Faculty;
 import ru.hogwarts.model.Student;
-import ru.hogwarts.repository.FacultyRepository;
 import ru.hogwarts.repository.StudentRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
-
     Logger logger = LoggerFactory.getLogger(StudentService.class);
+    int count = 1;
 
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
+
     }
 
     public Student createStudent (Student student) {
@@ -122,5 +119,54 @@ public class StudentService {
                 mapToInt(Student :: getAge).
                 average().
                 orElseThrow(NullPointerException::new);
+    }
+
+    public void printParallel() {
+        logger.info("Was invoked method for print parallel students names");
+        List <String> names = studentRepository.findAll().stream().
+                filter(e -> e.getId() <= 2).
+                map(Student :: getName).
+                collect(Collectors.toList());
+        System.out.println(names);
+
+        new Thread(() -> {
+            List <String> names2 = studentRepository.findAll().stream().
+                    filter(e -> e.getId() >= 3 && e.getId() <= 4).
+                    map(Student :: getName).
+                    collect(Collectors.toList());
+            System.out.println(names2);
+        }).start();
+
+        new Thread(() -> {
+            List <String> names3 = studentRepository.findAll().stream().
+                    filter(e -> e.getId() >= 5 && e.getId() <= 6).
+                    map(Student :: getName).
+                    collect(Collectors.toList());
+            System.out.println(names3);
+        }).start();
+    }
+
+    public synchronized void printStudentNamesInPairs(long name1, long name2) {
+
+        System.out.println(studentRepository.findById(name1).
+                map(Student ::getName).
+                orElseThrow(NullPointerException::new) + " count " + count);
+        System.out.println(studentRepository.findById(name2).
+                map(Student ::getName).
+                orElseThrow(NullPointerException::new) + " count " + count);
+        count ++;
+    }
+    public void printSynchronized() {
+        logger.info("Was invoked method for print synchronized students names");
+
+        printStudentNamesInPairs(1L, 2L);
+
+        new Thread(() -> {
+            printStudentNamesInPairs(3L, 4L);
+        }).start();
+
+        new Thread(() -> {
+            printStudentNamesInPairs(5L, 6L);
+        }).start();
     }
 }
