@@ -9,14 +9,16 @@ import ru.hogwarts.model.Faculty;
 import ru.hogwarts.model.Student;
 import ru.hogwarts.repository.StudentRepository;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
-    Logger logger = LoggerFactory.getLogger(StudentService.class);
-    int count = 1;
+    private final Logger logger = LoggerFactory.getLogger(StudentService.class);
+    private int count = 1;
 
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -123,26 +125,28 @@ public class StudentService {
 
     public void printParallel() {
         logger.info("Was invoked method for print parallel students names");
-        List <String> names = studentRepository.findAll().stream().
-                filter(e -> e.getId() <= 2).
+        List <Student> allStudents = studentRepository.findAll();
+        String names = allStudents.stream().
+                filter(e -> e.getId() == 1 || e.getId() == 2).
                 map(Student :: getName).
-                collect(Collectors.toList());
-        System.out.println(names);
+                toList().
+                toString();
+        logger.info("Main thread " + names);
 
         new Thread(() -> {
-            List <String> names2 = studentRepository.findAll().stream().
-                    filter(e -> e.getId() >= 3 && e.getId() <= 4).
+            List <String> names2 = allStudents.stream().
+                    filter(e -> e.getId() == 3 || e.getId() == 4).
                     map(Student :: getName).
-                    collect(Collectors.toList());
-            System.out.println(names2);
+                    toList();
+            logger.info("2 thread " + names2);;
         }).start();
 
         new Thread(() -> {
-            List <String> names3 = studentRepository.findAll().stream().
-                    filter(e -> e.getId() >= 5 && e.getId() <= 6).
+            List <String> names3 = allStudents.stream().
+                    filter(e -> e.getId() == 5 || e.getId() == 6).
                     map(Student :: getName).
-                    collect(Collectors.toList());
-            System.out.println(names3);
+                    toList();
+            logger.info("3 thread " + names3);;
         }).start();
     }
 
